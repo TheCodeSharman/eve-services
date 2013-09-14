@@ -7,7 +7,7 @@ import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonPropertyOrder({"price","volRemaining","range","orderID","volEntered","minVolume","bid","issueDate","duration","stationID","solarSystemID"}) // TODO Make this dynamic ??
+@JsonPropertyOrder({"price","volRemaining","range","orderID","volEntered","minVolume","bid","issueDate","duration","stationID","solarSystemID"})
 public class UUDIOrder {
 
 	@JsonProperty("orderID")

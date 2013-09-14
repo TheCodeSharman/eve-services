@@ -21,6 +21,7 @@ import uudi.UUDIResult;
 import uudi.UUDIRowSet;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -41,7 +42,9 @@ public class ReadUUDIOrderTest {
 		UUDI_ORDERS = (InputStream)ReadUUDIOrderTest.class.getResource("orders.json").getContent();
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.INDENT_OUTPUT, true );
-		parsedOrders =  UUDIFactory.parseUUDIResultFromJson( UUDI_ORDERS, mapper );
+		mapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true );
+		mapper.configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true );
+		parsedOrders =  mapper.readValue( UUDI_ORDERS, UUDIResult.class );
 		dateFmt = DateFormat.getDateTimeInstance( DateFormat.SHORT, DateFormat.LONG, Locale.UK );
 	}
 	

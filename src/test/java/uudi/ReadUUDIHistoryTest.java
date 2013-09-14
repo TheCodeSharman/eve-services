@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -27,12 +28,16 @@ public class ReadUUDIHistoryTest {
 	
 	public static DateFormat dateFmt;
 	
+	public static ObjectMapper mapper;
+	
 	@BeforeClass
 	public static void setUp() throws IOException {
 		UUDI_HISTORY = (InputStream)ReadUUDIHistoryTest.class.getResource("history.json").getContent();
-		ObjectMapper mapper = new ObjectMapper();
+		mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.INDENT_OUTPUT, true );
-		parsedOrders =  UUDIFactory.parseUUDIResultFromJson( UUDI_HISTORY, mapper );
+		mapper.configure(DeserializationFeature.USE_BIG_DECIMAL_FOR_FLOATS, true );
+		mapper.configure(DeserializationFeature.USE_BIG_INTEGER_FOR_INTS, true );
+		parsedOrders =  mapper.readValue( UUDI_HISTORY, UUDIResult.class );
 		dateFmt = DateFormat.getDateTimeInstance( DateFormat.SHORT, DateFormat.LONG, Locale.UK );
 	}
 	

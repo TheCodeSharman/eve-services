@@ -3,6 +3,9 @@ package uudi;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
+@JsonDeserialize(using=UUDIResultDeserializer.class)
 public class UUDIResult {
 	
 	private List<UUDIUploadKey> uploadKeys;
@@ -63,5 +66,6 @@ public class UUDIResult {
 	public void setRowsets(List<UUDIRowSet> rowsets){
 		this.rowsets = rowsets;
 	}
+
  
 }
